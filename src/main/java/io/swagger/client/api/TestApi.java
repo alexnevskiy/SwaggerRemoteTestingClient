@@ -30,6 +30,7 @@ import java.io.IOException;
 import io.swagger.client.model.Answer;
 import io.swagger.client.model.Exception;
 import io.swagger.client.model.Question;
+import io.swagger.client.model.Test;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -191,6 +192,119 @@ public class TestApi {
         return call;
     }
     /**
+     * Build call for getAllTests
+     * @param progressListener Progress listener
+     * @param progressRequestListener Progress request listener
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     */
+    public com.squareup.okhttp.Call getAllTestsCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/test/all";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+
+        final String[] localVarContentTypes = {
+            
+        };
+        final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        if(progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
+                @Override
+                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
+                    return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
+                }
+            });
+        }
+
+        String[] localVarAuthNames = new String[] {  };
+        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private com.squareup.okhttp.Call getAllTestsValidateBeforeCall(final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+        
+
+        com.squareup.okhttp.Call call = getAllTestsCall(progressListener, progressRequestListener);
+        return call;
+
+    }
+
+    /**
+     * Получить список тестов
+     * метод предназначен для получения списка тестов
+     * @return List&lt;Test&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public List<Test> getAllTests() throws ApiException {
+        ApiResponse<List<Test>> resp = getAllTestsWithHttpInfo();
+        return resp.getData();
+    }
+
+    /**
+     * Получить список тестов
+     * метод предназначен для получения списка тестов
+     * @return ApiResponse&lt;List&lt;Test&gt;&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     */
+    public ApiResponse<List<Test>> getAllTestsWithHttpInfo() throws ApiException {
+        com.squareup.okhttp.Call call = getAllTestsValidateBeforeCall(null, null);
+        Type localVarReturnType = new TypeToken<List<Test>>(){}.getType();
+        return apiClient.execute(call, localVarReturnType);
+    }
+
+    /**
+     * Получить список тестов (asynchronously)
+     * метод предназначен для получения списка тестов
+     * @param callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     */
+    public com.squareup.okhttp.Call getAllTestsAsync(final ApiCallback<List<Test>> callback) throws ApiException {
+
+        ProgressResponseBody.ProgressListener progressListener = null;
+        ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
+
+        if (callback != null) {
+            progressListener = new ProgressResponseBody.ProgressListener() {
+                @Override
+                public void update(long bytesRead, long contentLength, boolean done) {
+                    callback.onDownloadProgress(bytesRead, contentLength, done);
+                }
+            };
+
+            progressRequestListener = new ProgressRequestBody.ProgressRequestListener() {
+                @Override
+                public void onRequestProgress(long bytesWritten, long contentLength, boolean done) {
+                    callback.onUploadProgress(bytesWritten, contentLength, done);
+                }
+            };
+        }
+
+        com.squareup.okhttp.Call call = getAllTestsValidateBeforeCall(progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<List<Test>>(){}.getType();
+        apiClient.executeAsync(call, localVarReturnType, callback);
+        return call;
+    }
+    /**
      * Build call for getLastResult
      * @param userUuid userUuid для поиска (required)
      * @param progressListener Progress listener
@@ -323,7 +437,7 @@ public class TestApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call getTestAnswerCall(Integer userUuid, Long testId, Long questionId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call getTestAnswerCall(Integer userUuid, Long testId, Integer questionId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -369,7 +483,7 @@ public class TestApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getTestAnswerValidateBeforeCall(Integer userUuid, Long testId, Long questionId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getTestAnswerValidateBeforeCall(Integer userUuid, Long testId, Integer questionId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'userUuid' is set
         if (userUuid == null) {
@@ -401,7 +515,7 @@ public class TestApi {
      * @return Question
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public Question getTestAnswer(Integer userUuid, Long testId, Long questionId) throws ApiException {
+    public Question getTestAnswer(Integer userUuid, Long testId, Integer questionId) throws ApiException {
         ApiResponse<Question> resp = getTestAnswerWithHttpInfo(userUuid, testId, questionId);
         return resp.getData();
     }
@@ -415,7 +529,7 @@ public class TestApi {
      * @return ApiResponse&lt;Question&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Question> getTestAnswerWithHttpInfo(Integer userUuid, Long testId, Long questionId) throws ApiException {
+    public ApiResponse<Question> getTestAnswerWithHttpInfo(Integer userUuid, Long testId, Integer questionId) throws ApiException {
         com.squareup.okhttp.Call call = getTestAnswerValidateBeforeCall(userUuid, testId, questionId, null, null);
         Type localVarReturnType = new TypeToken<Question>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -431,7 +545,7 @@ public class TestApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getTestAnswerAsync(Integer userUuid, Long testId, Long questionId, final ApiCallback<Question> callback) throws ApiException {
+    public com.squareup.okhttp.Call getTestAnswerAsync(Integer userUuid, Long testId, Integer questionId, final ApiCallback<Question> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -468,7 +582,7 @@ public class TestApi {
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      */
-    public com.squareup.okhttp.Call postTestAnswerCall(Integer userUuid, Long testId, Long questionId, Long answerId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public com.squareup.okhttp.Call postTestAnswerCall(Integer userUuid, Long testId, Integer questionId, Integer answerId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -515,7 +629,7 @@ public class TestApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call postTestAnswerValidateBeforeCall(Integer userUuid, Long testId, Long questionId, Long answerId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call postTestAnswerValidateBeforeCall(Integer userUuid, Long testId, Integer questionId, Integer answerId, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'userUuid' is set
         if (userUuid == null) {
@@ -553,7 +667,7 @@ public class TestApi {
      * @return Answer
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public Answer postTestAnswer(Integer userUuid, Long testId, Long questionId, Long answerId) throws ApiException {
+    public Answer postTestAnswer(Integer userUuid, Long testId, Integer questionId, Integer answerId) throws ApiException {
         ApiResponse<Answer> resp = postTestAnswerWithHttpInfo(userUuid, testId, questionId, answerId);
         return resp.getData();
     }
@@ -568,7 +682,7 @@ public class TestApi {
      * @return ApiResponse&lt;Answer&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Answer> postTestAnswerWithHttpInfo(Integer userUuid, Long testId, Long questionId, Long answerId) throws ApiException {
+    public ApiResponse<Answer> postTestAnswerWithHttpInfo(Integer userUuid, Long testId, Integer questionId, Integer answerId) throws ApiException {
         com.squareup.okhttp.Call call = postTestAnswerValidateBeforeCall(userUuid, testId, questionId, answerId, null, null);
         Type localVarReturnType = new TypeToken<Answer>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -585,7 +699,7 @@ public class TestApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call postTestAnswerAsync(Integer userUuid, Long testId, Long questionId, Long answerId, final ApiCallback<Answer> callback) throws ApiException {
+    public com.squareup.okhttp.Call postTestAnswerAsync(Integer userUuid, Long testId, Integer questionId, Integer answerId, final ApiCallback<Answer> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
