@@ -31,7 +31,7 @@ import java.io.IOException;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2022-03-29T11:56:17.990Z")
 public class User {
   @SerializedName("uuid")
-  private Integer uuid = null;
+  private Long uuid = null;
 
   @SerializedName("login")
   private String login = null;
@@ -39,7 +39,7 @@ public class User {
   @SerializedName("password")
   private String password = null;
 
-  public User uuid(Integer uuid) {
+  public User uuid(Long uuid) {
     this.uuid = uuid;
     return this;
   }
@@ -49,11 +49,11 @@ public class User {
    * @return uuid
   **/
   @ApiModelProperty(value = "порядковый номер")
-  public Integer getUuid() {
+  public Long getUuid() {
     return uuid;
   }
 
-  public void setUuid(Integer uuid) {
+  public void setUuid(Long uuid) {
     this.uuid = uuid;
   }
 

@@ -1,8 +1,6 @@
-import io.swagger.client.ApiClient;
 import io.swagger.client.ApiException;
 import io.swagger.client.api.TestApi;
 import io.swagger.client.api.UserApi;
-import io.swagger.client.auth.HttpBasicAuth;
 import io.swagger.client.model.Answer;
 import io.swagger.client.model.Question;
 import io.swagger.client.model.Test;
@@ -10,7 +8,6 @@ import io.swagger.client.model.User;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Application {
@@ -18,6 +15,7 @@ public class Application {
     private static TestApi testApi;
     private static UserApi userApi;
     private static User user;
+    private static long testsCount;
 
     public static void main(String[] args) {
         scanner = new Scanner(System.in, StandardCharsets.UTF_8);
@@ -37,7 +35,7 @@ public class Application {
             }
         }
 
-//        getTests(); // TODO: Ждёмс Даню =)
+        getTests();
 
         printHelp();
         parseCommand();
@@ -68,6 +66,7 @@ public class Application {
             for (Test test: tests) {
                 System.out.println("Тест " + test.getId() + ": " + test.getTestName());
             }
+            testsCount = tests.size();
         } catch (ApiException e) {
             e.printStackTrace();
         }
@@ -75,7 +74,7 @@ public class Application {
 
     private static void getLatestTest() {
         try {
-            int score = testApi.getLastResult(user.getUuid());
+            long score = testApi.getLastResult(user.getUuid());
             System.out.println("Результат последнего теста: " + score + "%");
         } catch (ApiException e) {
             e.printStackTrace();
@@ -84,8 +83,8 @@ public class Application {
 
     private static void startTest(Long testId) {
         try {
-            int questionsCount = testApi.startTest(user.getUuid(), testId);
-            for (int i = 1; i <= questionsCount; i++) {
+            long questionsCount = testApi.startTest(user.getUuid(), testId);
+            for (long i = 1; i <= questionsCount; i++) {
                 Question question = testApi.getTestAnswer(user.getUuid(), testId, i);
                 System.out.println("Вопрос " + question.getId() + ":");
                 System.out.println(question.getQuestion());
@@ -100,7 +99,7 @@ public class Application {
                     if (scanner.hasNext()) {
                         String[] arguments = scanner.nextLine().trim().toLowerCase().split("\\s");
                         try {
-                            int answerNumber = Integer.parseInt(arguments[0]);
+                            long answerNumber = Long.parseLong(arguments[0]);
                             if (answerNumber > 0 && answerNumber <= answers.size()) {
                                 isCorrect = true;
                                 testApi.postTestAnswer(user.getUuid(), testId, question.getId(), answerNumber);
@@ -114,10 +113,10 @@ public class Application {
                 }
             }
 
-            int score = testApi.finishTest(user.getUuid(), testId);
+            long score = testApi.finishTest(user.getUuid(), testId);
             System.out.println("Вы набрали " + score + "% правильных ответов.");
         } catch (ApiException e) {
-            e.printStackTrace();
+            System.out.println("Тест уже запущен.");
         }
     }
 
@@ -147,7 +146,12 @@ public class Application {
                         break;
                     case "start":
                         try {
-                            startTest(Long.valueOf(arguments[1]));
+                            long test = Long.parseLong(arguments[1]);
+                            if (test > testsCount) {
+                                System.out.println("Номер теста должен быть в диапазоне от 1 до " + testsCount);
+                            } else {
+                                startTest(test);
+                            }
                         } catch (NumberFormatException e) {
                             System.out.println("Неправильный аргумент. Введите номер теста.");
                         }

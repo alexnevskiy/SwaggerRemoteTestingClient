@@ -34,7 +34,7 @@ import java.util.List;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2022-03-29T11:56:17.990Z")
 public class Question {
   @SerializedName("id")
-  private Integer id = null;
+  private Long id = null;
 
   @SerializedName("question")
   private String question = null;
@@ -42,7 +42,7 @@ public class Question {
   @SerializedName("answers")
   private List<Answer> answers = null;
 
-  public Question id(Integer id) {
+  public Question id(Long id) {
     this.id = id;
     return this;
   }
@@ -52,11 +52,11 @@ public class Question {
    * @return id
   **/
   @ApiModelProperty(value = "id вопроса")
-  public Integer getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(Long id) {
     this.id = id;
   }
 

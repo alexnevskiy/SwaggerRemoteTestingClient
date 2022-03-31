@@ -45,9 +45,9 @@ public class TestApiTest {
      */
     @Test
     public void finishTestTest() throws ApiException {
-        Integer userUuid = null;
+        Long userUuid = null;
         Long testId = null;
-        Integer response = api.finishTest(userUuid, testId);
+        Long response = api.finishTest(userUuid, testId);
 
         // TODO: test validations
     }
@@ -62,8 +62,8 @@ public class TestApiTest {
      */
     @Test
     public void getLastResultTest() throws ApiException {
-        Integer userUuid = null;
-        Integer response = api.getLastResult(userUuid);
+        Long userUuid = null;
+        Long response = api.getLastResult(userUuid);
 
         // TODO: test validations
     }
@@ -78,9 +78,9 @@ public class TestApiTest {
      */
     @Test
     public void getTestAnswerTest() throws ApiException {
-        Integer userUuid = null;
+        Long userUuid = null;
         Long testId = null;
-        Integer questionId = null;
+        Long questionId = null;
         Question response = api.getTestAnswer(userUuid, testId, questionId);
 
         // TODO: test validations
@@ -96,10 +96,10 @@ public class TestApiTest {
      */
     @Test
     public void postTestAnswerTest() throws ApiException {
-        Integer userUuid = null;
+        Long userUuid = null;
         Long testId = null;
-        Integer questionId = null;
-        Integer answerId = null;
+        Long questionId = null;
+        Long answerId = null;
         Answer response = api.postTestAnswer(userUuid, testId, questionId, answerId);
 
         // TODO: test validations
@@ -115,9 +115,9 @@ public class TestApiTest {
      */
     @Test
     public void startTestTest() throws ApiException {
-        Integer userUuid = null;
+        Long userUuid = null;
         Long testId = null;
-        Integer response = api.startTest(userUuid, testId);
+        Long response = api.startTest(userUuid, testId);
 
         // TODO: test validations
     }
